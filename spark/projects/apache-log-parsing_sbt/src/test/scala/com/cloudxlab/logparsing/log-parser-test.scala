@@ -27,4 +27,5 @@ class LogParserSpec extends FlatSpec {
         assert(!utils.isClassA("239.242.40.10 "))
         assert(!utils.isClassA("191.242.40.10 "))
       }
+   
 }
