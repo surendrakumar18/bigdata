@@ -54,7 +54,7 @@ class SampleTest extends FunSuite with SharedSparkContext {
     assert(records(0)._1 == "/images/ksclogosmall.gif")
 
   }
-  test("Computing top10 timestamp") {
+  test("Computing top10 hightraffic") {
 
     var line1 = "slppp6.intermind.net - - [01/Aug/1995:00:00:12 -0400] \"GET /images/ksclogosmall.gif HTTP/1.0\" 200 3635"
     //var line1 = "121.242.40.10 - - [03/Aug/2015:06:30:52 -0400] \"POST /mod_pagespeed_beacon?url=http%3A%2F%2Fwww.knowbigdata.com%2Fpage%2Fabout-us HTTP/1.1\" 204 206 \"http://www.knowbigdata.com/page/about-us\" \"Mozilla/5.0 (Windows NT 6.3; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0\""
@@ -70,6 +70,26 @@ class SampleTest extends FunSuite with SharedSparkContext {
     val rdd = sc.parallelize(list);
     assert(rdd.count === list.length)
     val records = utils.gethightraffictop5(rdd, sc, 10)
+    assert(records.length === 1)
+    assert(records(0)._1 == "01/Aug/1995:00:00:12 -0400")
+
+  }
+    test("Computing top10 lowtraffic") {
+
+    var line1 = "slppp6.intermind.net - - [01/Aug/1995:00:00:12 -0400] \"GET /images/ksclogosmall.gif HTTP/1.0\" 200 3635"
+    //var line1 = "121.242.40.10 - - [03/Aug/2015:06:30:52 -0400] \"POST /mod_pagespeed_beacon?url=http%3A%2F%2Fwww.knowbigdata.com%2Fpage%2Fabout-us HTTP/1.1\" 204 206 \"http://www.knowbigdata.com/page/about-us\" \"Mozilla/5.0 (Windows NT 6.3; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0\""
+    //var line2 = "::1 - - [11/May/2015:06:44:40 -0400] \"OPTIONS * HTTP/1.0\" 200 125 \"-\" \"Apache/2.4.7 (Ubuntu) PHP/5.5.9-1ubuntu4.7 OpenSSL/1.0.1f (internal dummy connection)\""
+    var line2 = "133.43.96.45 - - [01/Aug/1995:00:00:12 -0400] \"GET /images/ksclogosmall.gif HTTP/1.0\" 200 1204"
+
+    //133.43.96.45
+
+    val utils = new Utils
+
+    val list = List(line1, line2)
+
+    val rdd = sc.parallelize(list);
+    assert(rdd.count === list.length)
+    val records = utils.getlowtraffictop5(rdd, sc, 10)
     assert(records.length === 1)
     assert(records(0)._1 == "01/Aug/1995:00:00:12 -0400")
 
