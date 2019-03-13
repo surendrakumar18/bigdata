@@ -43,7 +43,7 @@ class Utils extends Serializable {
       //record_v("Empty", "", "", -1 )
     } else {
       val m = res.get
-      val url = m.group(4)
+      val url = m.group(4)//get timestamp
 
       return (url.toString)
       //record_v(m.group(1), m.group(4),m.group(6), m.group(8).toInt)
@@ -59,7 +59,7 @@ class Utils extends Serializable {
       //record_v("Empty", "", "", -1 )
     } else {
       val m = res.get
-      val url = m.group(8)
+      val url = m.group(8) //get http
 
       return (url.toString)
       //record_v(m.group(1), m.group(4),m.group(6), m.group(8).toInt)
@@ -76,7 +76,7 @@ class Utils extends Serializable {
   }
   def isClassA(ip: String): Boolean = {
     ip.split('.')(0).toInt < 127
-  }
+ }
 
   def gettop10URL(accessLogs: RDD[String], sc: SparkContext, topnurl: Int): Array[(String, Int)] = {
 
